@@ -1,0 +1,25 @@
+version: "3.6"
+services:
+  api:
+    build:
+      context: ./api
+      args:
+        MYSQL_URL: mysql://test:test@db:3306/test
+    ports:
+      - "3000:3000"
+    environment:
+      DEBUG: "*"
+      MYSQL_URL: mysql://test:test@db:3306/test
+  db:
+    image: mariadb:10.1
+    volumes:
+      - ./db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
